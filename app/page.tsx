@@ -1,10 +1,85 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { motion, useScroll, AnimatePresence } from "framer-motion"
+
+const TeamMember = ({ name, position, image }: { name: string; position: string; image: string }) => (
+  <div className="flex-shrink-0 w-48 mx-4 text-center">
+    <div className="mb-4">
+      <Image
+        src={image}
+        alt={`Image of ${name}`}
+        width={192}
+        height={192}
+        className="w-full h-48 object-cover rounded-lg"
+      />
+    </div>
+    <div className="space-y-1">
+      <h3 className="font-serif text-lg leading-none">{name}</h3>
+      <p className="text-sm text-muted-foreground">{position}</p>
+    </div>
+  </div>
+)
+
+const InfiniteScroll = ({ children }: { children: React.ReactNode }) => {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [isMouseOver, setIsMouseOver] = useState(false)
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current
+    if (!scrollContainer) return
+
+    let animationId: number
+
+    const scroll = () => {
+      if (isMouseOver) return
+      scrollContainer.scrollLeft += 1
+      if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+        scrollContainer.scrollLeft = 0
+      }
+      animationId = requestAnimationFrame(scroll)
+    }
+
+    animationId = requestAnimationFrame(scroll)
+
+    return () => cancelAnimationFrame(animationId)
+  }, [isMouseOver])
+
+  const handleScroll = () => {
+    const scrollContainer = scrollRef.current
+    if (!scrollContainer) return
+
+    if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+      scrollContainer.scrollLeft = 0
+    } else if (scrollContainer.scrollLeft <= 0) {
+      scrollContainer.scrollLeft = scrollContainer.scrollWidth / 2
+    }
+  }
+
+  return (
+    <div className="relative">
+      <div
+        ref={scrollRef}
+        className="flex overflow-x-scroll no-scrollbar"
+        style={{
+          maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
+        }}
+        onMouseEnter={() => setIsMouseOver(true)}
+        onMouseLeave={() => setIsMouseOver(false)}
+        onScroll={handleScroll}
+      >
+        {children}
+        {children}
+      </div>
+    </div>
+  )
+}
 
 const MatrixRain = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -102,6 +177,15 @@ const CountUp = ({ end, duration = 2000 }: { end: number; duration?: number }) =
 export default function Component() {
   const [isScrolled, setIsScrolled] = useState(false)
   const { scrollY } = useScroll()
+
+  const teamMembers = [
+    { name: "Jane Doe", position: "CEO & Founder", image: "/placeholder.svg?height=192&width=192" },
+    { name: "John Smith", position: "CTO", image: "/placeholder.svg?height=192&width=192" },
+    { name: "Alice Johnson", position: "Head of Partnerships", image: "/placeholder.svg?height=192&width=192" },
+    { name: "Bob Williams", position: "Lead Developer", image: "/placeholder.svg?height=192&width=192" },
+    { name: "Emma Brown", position: "Marketing Director", image: "/placeholder.svg?height=192&width=192" },
+    { name: "Michael Davis", position: "Program Manager", image: "/placeholder.svg?height=192&width=192" },
+  ]
 
   const partnershipMailto = "mailto:partnerships@venturedglobal.org?cc=kofi@venturedglobal.org, smyan@venturedglobal.org, rashi@venturedglobal.org&subject=%5BYOUR%20COMPANY%20NAME%5D%20X%20VenturEd&body=Hi%20VenturEd%20Team%2C%0A%0AI'm%20%5BYOUR%20NAME%5D%2C%20%5BTITLE%5D%20at%20%5BCOMPANY%20NAME%5D.%20%0A%0AAfter%20looking%20over%20your%20fellowship%20program%2C%20we%20are%20excited%20about%20the%20potential%20collaboration.%0A%0AWe're%20currently%20looking%20to%20%5Bspecific%20challenge%20you're%20facing%20-%20e.g.%2C%20start%20a%20short-form%20content%20strategy%5D%20and%20need%20your%20help%20for%20%5BSkill%20gap%20or%20support%20needed%20-%20e.g.%2C%20a%20TikTok%20marketing%20channel%5D%20to%20%5BStrategic%20growth%20area%20-%20e.g.%2C%20expand%20our%20product's%20user%20acquisition%20channels%5D.%0A%0AWe%20are%20especially%20interested%20in%20Fellows%20who%20can%20%5Btechnical%20skill%20-%20e.g.%2C%20analyze%20data%20with%20Python%5D%2C%20and%20are%20%5BSoft%20skill%20-%20e.g.%2C%20fast%20decision-makers%5D.%20They%20should%20%5BDomain%20expertise%20-%20e.g.%2C%20understand%20startup%20growth%20mechanics%5D.%0A%0AA%20bit%20about%20our%20company%3A%0A%0AWe%20%5BBrief%20company%20description%5D.%20Specifically%2C%20we%20are%20unique%20because%20%5BUnique%20value%20proposition%5D.%20Currently%2C%20we%20are%20at%20%5BCurrent%20stage%2Ffunding%5D.%0A%0AWould%20love%20to%20schedule%20a%2015-minute%20call%20to%20discuss%20potential%20partnership%20details.%0A%0AThanks%2C%20%0A%5BYOUR%20NAME%5D%20%5BCONTACT%20INFORMATION%5D"
   useEffect(() => {
@@ -241,7 +325,7 @@ export default function Component() {
               <div className="space-y-2 max-w-3xl mx-auto">
                 <h2 className="font-serif text-3xl sm:text-4xl">About the Fellowship</h2>
                 <p className="text-muted-foreground">
-                  Our fellowship program connects nontraditional high school students with internship opportunities at leading tech startups. Through mentorship, technical training, and hands-on experience, we&apos;re building pathways to careers in technology.
+                Our 8-week fellowship program connects high-potential high school students from underrepresented backgrounds with hands-on internship opportunities at leading tech startups. We&apos;re building pathways to careers in technology.
                 </p>
               </div>
             </div>
@@ -255,19 +339,20 @@ export default function Component() {
               >
                 <div className="grid gap-6">
                   <div className="grid gap-1">
-                    <h3 className="text-xl font-medium">Application</h3>
+                    <h3 className="text-xl font-medium">1/ Application</h3>
                     <p className="text-sm text-muted-foreground">
-                      Submit your application and showcase your potential
+                      Submit your application and showcase your potential. We're looking for anyone who:
+                      *
                     </p>
                   </div>
                   <div className="grid gap-1">
-                    <h3 className="text-xl font-medium">Training</h3>
+                    <h3 className="text-xl font-medium">2/ Training</h3>
                     <p className="text-sm text-muted-foreground">
                       Receive mentorship and technical training
                     </p>
                   </div>
                   <div className="grid gap-1">
-                    <h3 className="text-xl font-medium">Placement</h3>
+                    <h3 className="text-xl font-medium">3/ Placement</h3>
                     <p className="text-sm text-muted-foreground">
                       Get matched with top tech companies
                     </p>
@@ -286,6 +371,31 @@ export default function Component() {
               </motion.div>
             </div>
           </div>
+        </section>
+
+        <section id="team" className="py-24 sm:py-32">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+              <h2 className="font-serif text-3xl sm:text-4xl">Our Team</h2>
+              <p className="mx-auto max-w-[700px] text-muted-foreground">
+                Meet the passionate individuals driving our mission forward
+              </p>
+            </div>
+            <InfiniteScroll>
+              {teamMembers.map((member, index) => (
+                <TeamMember key={index} {...member} />
+              ))}
+            </InfiniteScroll>
+          </div>
+          <style jsx global>{`
+            .no-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+            .no-scrollbar {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+          `}</style>
         </section>
 
         <section id="partners" className="py-16 sm:py-24">
@@ -318,7 +428,7 @@ export default function Component() {
         <section className="py-16 sm:py-24">
           <div className="container mx-auto px-4 md:px-6 flex justify-center">
             <Link
-              href="mailto:contact@ventured.com"
+              href="mailto:contact@venturedglobal.org"
               className="font-serif text-2xl sm:text-3xl md:text-4xl underline underline-offset-4 hover:text-primary transition-colors duration-200 text-center w-full max-w-3xl"
             >
               Contact Us
@@ -387,7 +497,7 @@ export default function Component() {
         }
         
         .bg-grid-white {
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
       `}</style>
     </div>

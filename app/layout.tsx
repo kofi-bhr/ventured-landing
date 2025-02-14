@@ -30,7 +30,7 @@ export const metadata: Metadata = {
         url: '/ventured.png',
         width: 1200,
         height: 630,
-        alt: 'VenturEd Fellowship Program - Tech Internships for High School Students'
+        alt: 'VenturEd Fellowship Program | Tech Internships for High School Students'
       }
     ],
     locale: "en_US",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
       url: 'https://venturedglobal.org',
       sameAs: [
         'https://linkedin.com/company/venturedglobal',
-        // Add other social media URLs
+        'https://www.instagram.com/venturedglobal/'
       ],
       areaServed: 'Worldwide',
       program: {
@@ -54,8 +54,6 @@ export const metadata: Metadata = {
         description: '8-week fellowship program connecting high-potential students with tech startup internships',
         timeToComplete: 'P8W',
         educationalProgramMode: 'hybrid',
-        applicationStartDate: '2024-01-01',
-        applicationDeadline: '2024-12-31',
         educationalCredentialAwarded: 'Fellowship Certificate',
         occupationalCredentialAwarded: 'Tech Industry Experience',
         programType: 'Internship Program'

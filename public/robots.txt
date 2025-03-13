@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://venturedglobal.org/sitemap.xml
+
+# Allow all bots to access everything
+# Once sitemap is generated, it will be referenced here 

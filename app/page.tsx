@@ -600,12 +600,6 @@ export default function Component() {
                   <span className="absolute inset-x-0 bottom-0 h-px w-full bg-gradient-to-r from-transparent via-[#4646E0] to-transparent" />
                 </Button>
               </div>
-              <Link
-                href="mailto:contact@venturedglobal.org"
-                className="font-serif text-xl sm:text-2xl underline underline-offset-4 hover:text-[#4646E0] transition-colors duration-200"
-              >
-                Contact Us
-              </Link>
             </div>
           </section>
         </main>

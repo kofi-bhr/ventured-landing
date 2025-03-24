@@ -18,9 +18,7 @@ export default function AboutPage() {
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-instrument-serif mb-6">
-              hey, i'm kofi :)
-            </h1>
+            
             <div className="w-32 h-32 mx-auto mb-6 relative rounded-full overflow-hidden">
               <Image
                 src="/kofi.png"
@@ -30,57 +28,34 @@ export default function AboutPage() {
                 priority
               />
             </div>
+            <h1 className="text-4xl md:text-5xl font-instrument-serif mb-6">
+              hey, i'm kofi :)
+            </h1>
           </div>
           
           <article className="prose prose-lg dark:prose-invert mx-auto">
-            <p>
-              in high school, i was always the kid who tinkered with code, built random projects, and dreamed about working in tech. but breaking into the industry felt like this massive, impossible challenge. especially since i didn't have any "real" experience or connections.
-            </p>
-
-            <p>
-              that's exactly why i started ventured. we're not just another internship program - we're building the bridge i wish i had back then. a way for ambitious high school students to get hands-on experience at actual startups, work on real projects that matter, and start building their future in tech.
-            </p>
-
-            <p>
-              what makes us different? we're 100% focused on high school students. no college requirement. no expensive program fees. just pure opportunity for young people who are passionate about tech and ready to prove themselves. we partner with innovative startups who need fresh perspectives and are willing to give talented students a real shot.
-            </p>
-
-            <p>
-              our first cohort absolutely crushed it. we're talking about students who:
-            </p>
-
-            <ul>
-              <li>built and shipped features used by thousands of users</li>
-              <li>led marketing campaigns that drove real growth</li>
-              <li>contributed to core product development</li>
-              <li>and most importantly, proved that age is just a number when it comes to making an impact</li>
-            </ul>
-
-            <p>
-              we're especially proud that our fellowship is helping diversify the tech pipeline early. our first cohort outperformed average u.s. tech workforce diversity rates across the board:
-            </p>
-
-            <ul>
-              <li>female representation: +27.4%</li>
-              <li>asian representation: +53.3%</li>
-              <li>black representation: +4.5%</li>
-            </ul>
-
-            <p>
-              but this is just the beginning. we're building a community where high school students can start their tech journey early, learn from experienced mentors, and connect with other ambitious young people who share their passion.
-            </p>
-
-            <p>
-              whether you're a student dreaming of a future in tech, a startup looking to work with amazing young talent, or just someone who believes in our mission - i'd love to hear from you. shoot me an email at kofi@venturedglobal.org or connect with me on linkedin.
-            </p>
-
-            <p>
-              let's build something amazing together,<br />
-              kofi
-            </p>
+            {[
+              "hey there,",
+              "i'm kofi, and i started ventured because i kept seeing the same thing over and over growing up in baltimore.",
+              "i was adopted by white parents and raised in roland park, going to schools with 3D printers and coding clubs. but just a few miles away, kids just as smart as me—probably smarter—had never even heard of python or javascript, let alone had the chance to learn them.",
+              "it wasn't a talent gap. it was an opportunity gap.",
+              "that's the thing about talent—it's everywhere. in every neighborhood, every demographic, every background. but opportunity? that's concentrated in specific pockets, flowing to the already-privileged, creating this cycle where the same types of people keep building the same types of solutions for the same types of problems.",
+              "ventured exists to break that cycle.",
+              "we don't 'discover diamonds in the rough', because that framing gets it backward. talent isn't rare. opportunity is.",
+              "when we connect young people from cherry hill or sandtown-winchester with internships at tech companies, we're not doing charity. we're unlocking innovation that wouldn't happen otherwise. we're creating pathways for new ideas to emerge from new perspectives.",
+              "because here's what i know for sure: the kid who's never seen the inside of a tech company might be the only one who can solve a problem the tech industry doesn't even know it has.",
+              "this work isn't just about diversity for diversity's sake. it's about expanding who gets to innovate, what problems get solved, and ultimately, who benefits from technology and entrepreneurship.",
+              "if you're reading this, you're part of this journey now. whether you're a student looking for opportunity, a company looking for talent, or a supporter looking to make an impact—welcome.",
+              "let's build a world where talent and opportunity are both evenly distributed.",
+              "—kofi"
+            ].map((paragraph, index) => (
+              <p key={index} className="mb-6">
+                {paragraph}
+              </p>
+            ))}
           </article>
         </div>
       </main>
     </>
-  )
-} 
+  );
+}

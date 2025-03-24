@@ -253,6 +253,12 @@ const partners = [
     link: "https://www.jammy.chat",
     description: "Startup Partner"
   },
+  {
+    name: "Crackd",
+    image: "/logos/crackd.png",
+    link: "https://www.crackd.it/",
+    description: "Startup Partner"
+  }
 ];
 
 export default function Component() {

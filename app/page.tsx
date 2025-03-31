@@ -249,7 +249,7 @@ const partners = [
   },
   {
     name: "Learnology",
-    image: "https://i0.wp.com/learnology.world/wp-content/uploads/2023/08/Untitled_design__34_-removebg-preview.png?fit=500%2C500&ssl=1",
+    image: "/logos/learnology.webp",
     link: "https://www.learnology.world",
     description: "Building a global tech Community"
   },

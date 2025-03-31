@@ -248,6 +248,12 @@ const partners = [
     description: "Funding our mission to make tech education accessible"
   },
   {
+    name: "Learnology",
+    image: "https://i0.wp.com/learnology.world/wp-content/uploads/2023/08/Untitled_design__34_-removebg-preview.png?fit=500%2C500&ssl=1",
+    link: "https://www.learnology.world",
+    description: "Building a global tech Community"
+  },
+  {
     name: "Jammy Chat",
     image: "/logos/jammy.svg",
     link: "https://www.jammy.chat",
@@ -258,7 +264,7 @@ const partners = [
     image: "/logos/crackd.png",
     link: "https://www.crackd.it/",
     description: "Startup Partner"
-  }
+  },
 ];
 
 export default function Component() {

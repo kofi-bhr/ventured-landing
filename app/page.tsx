@@ -273,7 +273,7 @@ export default function Component() {
 
   const teamMembers = [
     { name: "Kofi Hair-Ralston", position: "CEO & Founder", image: "/people/kofib.png" },
-    { name: "Smyan Shanbhag", position: "CTO", image: "/people/smyan.jpeg" },
+    { name: "Smyan Shanbhag", position: "COO", image: "/people/smyan.jpeg" },
     { name: "Rashi Mhapsekar", position: "CMO", image: "/people/rashi.jpeg" },
   ]
 
